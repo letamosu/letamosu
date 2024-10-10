@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Time Calculator with Lunch Break</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Work Time Calculator</h2>
+    <label for="start-time">Start Time:</label>
+    <input type="time" id="start-time" required>
+    
+    <label for="end-time">End Time:</label>
+    <input type="time" id="end-time" required>
+    
+    <label for="lunch-duration">Lunch Break Duration (in minutes):</label>
+    <input type="number" id="lunch-duration" placeholder="e.g., 30" required>
+    
+    <button onclick="calculateWorkTime()">Calculate Work Hours</button>
+    
+    <h3>Total Work Hours: <span id="result">0</span></h3>
+</div>
+
+<script>
+    function calculateWorkTime() {
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
+        const lunchDuration = parseInt(document.getElementById('lunch-duration').value);
+
+        if (!startTime || !endTime || isNaN(lunchDuration)) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        const start = new Date(`01/01/2023 ${startTime}`);
+        const end = new Date(`01/01/2023 ${endTime}`);
+
+        // Calculate time difference in milliseconds
+        let timeDiff = end - start;
+
+        // Convert milliseconds to hours
+        let hoursWorked = timeDiff / (1000 * 60 * 60);
+
+        // Subtract lunch break in hours
+        hoursWorked -= lunchDuration / 60;
+
+        // Display result
+        document.getElementById('result').textContent = hoursWorked.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
